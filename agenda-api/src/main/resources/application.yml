@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: agenda-api
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/agenda_instituto_dor}
+    username: ${SPRING_DATASOURCE_USERNAME:agenda}
+    password: ${SPRING_DATASOURCE_PASSWORD:agenda}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:}
+            client-secret: ${GOOGLE_CLIENT_SECRET:}
+            redirect-uri: ${GOOGLE_REDIRECT_URI:http://localhost:8080/login/oauth2/code/google}
+            scope: openid,profile,email,https://www.googleapis.com/auth/calendar.events
+server:
+  port: ${PORT:8080}
+app:
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  time-zone: ${APP_TIME_ZONE:America/Sao_Paulo}
+  push:
+    vapid-public-key: ${VAPID_PUBLIC_KEY:}
+    vapid-private-key: ${VAPID_PRIVATE_KEY:}
+    vapid-subject: ${VAPID_SUBJECT:mailto:admin@institutodor.com.br}
+    check-interval-ms: ${PUSH_CHECK_INTERVAL_MS:60000}

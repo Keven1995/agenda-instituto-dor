@@ -157,7 +157,7 @@ GET /api/health
 ### Pre-requisitos
 
 - Node.js 20 ou superior
-- Java 21 ou superior
+- Java 17 ou superior
 - Maven 3.9 ou superior
 - Docker Desktop
 
@@ -186,7 +186,7 @@ npm install
 npm run dev
 ```
 
-O frontend fica disponivel em `http://localhost:5173` e a API em `http://localhost:8080`.
+O frontend fica disponivel em `http://localhost:5173`, a API em `http://localhost:8080` e o PostgreSQL deste projeto em `localhost:5433`. A porta interna do PostgreSQL continua sendo `5432`.
 
 ## Configuracao do Google OAuth
 
@@ -227,3 +227,55 @@ mvn test
 ```
 
 O projeto segue separacao de responsabilidades, injecao de dependencias, contratos de API, validacao no backend e isolamento da integracao externa por meio do `CalendarGateway`.
+
+## Status
+
+Implementados:
+
+- PWA responsivo com calendario mensal.
+- Autenticacao Google via sessao de servidor.
+- Persistencia de usuarios e agendamentos.
+- CRUD de agendamentos com validacao de conflitos.
+- Criacao, atualizacao e cancelamento de eventos no Google Calendar.
+- Testes unitarios das regras de negocio e do mapeamento de eventos.
+
+Proximos incrementos:
+
+- Outbox e retry para aumentar a resiliencia da sincronizacao externa.
+- Testes de contrato HTTP e testes de integracao com PostgreSQL.
+
+## Notificacoes Push no iPhone
+
+O PWA possui notificacoes Web Push para lembrar o profissional cinco minutos antes do atendimento. A mensagem exibida e:
+
+```text
+A consulta com Nome do Paciente esta agendada para 14:00
+```
+
+Para usar no iPhone:
+
+1. Abra o sistema pelo Safari.
+2. Instale o PWA pela opcao **Adicionar a Tela de Inicio**.
+3. Abra o PWA instalado.
+4. Clique em **Ativar notificações**.
+5. Permita as notificacoes quando o iPhone solicitar.
+
+O PWA precisa estar publicado em HTTPS para funcionar em producao. O backend verifica os agendamentos a cada minuto e envia a notificacao quando o horario estiver a cinco minutos do atendimento.
+
+### Chaves VAPID
+
+Gere um par de chaves VAPID para o ambiente local ou de producao:
+
+```bash
+npx web-push generate-vapid-keys
+```
+
+Configure os valores no arquivo `agenda-api/.env`:
+
+```env
+VAPID_PUBLIC_KEY=
+VAPID_PRIVATE_KEY=
+VAPID_SUBJECT=mailto:admin@institutodor.com.br
+```
+
+Nunca versione a chave privada. O arquivo `.env` ja esta no `.gitignore`.
