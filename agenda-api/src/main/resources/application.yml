@@ -22,6 +22,12 @@ spring:
             scope: openid,profile,email,https://www.googleapis.com/auth/calendar.events
 server:
   port: ${PORT:8080}
+  forward-headers-strategy: framework
+  servlet:
+    session:
+      cookie:
+        secure: ${SESSION_COOKIE_SECURE:false}
+        same-site: ${SESSION_COOKIE_SAME_SITE:lax}
 app:
   frontend-url: ${FRONTEND_URL:http://localhost:5173}
   time-zone: ${APP_TIME_ZONE:America/Sao_Paulo}

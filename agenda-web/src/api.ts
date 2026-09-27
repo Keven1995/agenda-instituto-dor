@@ -10,6 +10,7 @@ export type Appointment = {
 export type AppointmentInput = Pick<Appointment, 'patientName' | 'startAt' | 'endAt'>
 
 const apiUrl = import.meta.env.VITE_API_URL ?? '/api'
+const apiOrigin = new URL(apiUrl, window.location.origin).origin
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const headers = new Headers(options?.headers)
@@ -59,5 +60,5 @@ export function savePushSubscription(subscription: { endpoint: string; keys: { p
 }
 
 export function googleLoginUrl() {
-  return `${window.location.origin}/oauth2/authorization/google`
+  return `${apiOrigin}/oauth2/authorization/google`
 }
