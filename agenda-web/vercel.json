@@ -1,5 +1,20 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/api/:path*",
+      "destination": "https://agenda-instituto-dor.onrender.com/api/:path*"
+    },
+    {
+      "source": "/oauth2/:path*",
+      "destination": "https://agenda-instituto-dor.onrender.com/oauth2/:path*"
+    },
+    {
+      "source": "/login/:path*",
+      "destination": "https://agenda-instituto-dor.onrender.com/login/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
