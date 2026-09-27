@@ -1,0 +1,20 @@
+# Environment and secrets
+.env
+*.env.local
+
+# Frontend
+agenda-web/node_modules/
+agenda-web/dist/
+agenda-web/*.tsbuildinfo
+agenda-web/vite.config.js
+agenda-web/vite.config.d.ts
+
+# Backend
+agenda-api/target/
+
+# IDE and OS
+.idea/
+.vscode/
+*.iml
+Thumbs.db
+.DS_Store
